@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tư vấn tiết kiệm chi phí</title>
+<style>
+    body { 
+        font-family: Arial; 
+        background: #f5f5f5; 
+        padding: 40px;
+    }
+    .box {
+        background: #fff; 
+        padding: 25px; 
+        width: 400px; 
+        margin: auto; 
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+        width: 100%; 
+        padding: 12px; 
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    button {
+        background: #1a73e8; 
+        color: white; 
+        border: none; 
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #0c5bcc;
+    }
+    .result {
+        margin-top: 20px; 
+        padding: 15px; 
+        background: #eef4ff; 
+        border-radius: 8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Tư vấn tối ưu hóa chi phí</h2>
+    <p>Nhập số tiền bạn muốn tiết kiệm:</p>
+    <input type="number" id="amount" placeholder="Ví dụ: 2000000">
+    <button onclick="analyze()">Xem lời khuyên</button>
+
+    <div class="result" id="advice"></div>
+</div>
+
+<script>
+function analyze() {
+    let money = Number(document.getElementById("amount").value);
+    let result = "";
+
+    if (!money || money <= 0) {
+        result = "Vui lòng nhập số tiền hợp lệ!";
+    } 
+    else if (money <= 1000000) {
+        result = `
+        ✔ Cắt giảm 5–10% chi phí ăn uống.\n
+        ✔ Hạn chế order đồ ăn, cà phê.\n
+        ✔ Giảm mua sắm không cần thiết.\n
+        ✔ Tìm các mã giảm giá khi mua online.\n
+        `;
+    } 
+    else if (money <= 5000000) {
+        result = `
+        ✔ Giảm chi phí giải trí (du lịch, xem phim, shopping).\n
+        ✔ Kiểm soát chi ngân hàng/ứng dụng (auto-subscriptions).\n
+        ✔ Giảm chi phí đi lại bằng cách đi chung xe hoặc tối ưu xăng.\n
+        ✔ Lên kế hoạch chi tiêu theo 50-30-20.\n
+        `;
+    } 
+    else {
+        result = `
+        ✔ Rà soát lại toàn bộ chi phí cố định: thuê nhà, điện nước, internet.\n
+        ✔ Đàm phán giảm giá dịch vụ định kỳ.\n
+        ✔ Cân nhắc thay đổi lối sống tiêu dùng: ăn uống tại nhà, ít mua sắm.\n
+        ✔ Ghi chép chi tiêu trong 30 ngày để tìm điểm rò rỉ tiền.\n
+        ✔ Đề xuất thêm: tạo quỹ tiết kiệm hoặc gửi tiết kiệm tự động.\n
+        `;
+    }
+
+    document.getElementById("advice").innerText = result;
+}
+</script>
+
+</body>
+</html>
