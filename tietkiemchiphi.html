@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Kế Hoạch Tiết Kiệm Cá Nhân</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f8f8f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 32px;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 30px auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .box {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+        color: #444;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background: #4a6bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .highlight {
+        font-size: 40px;
+        font-weight: bold;
+        color: #4a6bff;
+    }
+
+    .small-text {
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .strategy-item {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .strategy-item-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Tính Toán Kế Hoạch Tiết Kiệm Của Bạn</h1>
+
+<div class="container">
+
+    <!-- FORM BÊN TRÁI -->
+    <div class="box">
+        <h2>Nhập Thông Tin Của Bạn</h2>
+
+        <label>Thu nhập hằng tháng (VND):</label>
+        <input type="number" id="income" placeholder="Ví dụ: 10000000">
+
+        <label>Số tiền muốn tiết kiệm (VND):</label>
+        <input type="number" id="target" placeholder="Ví dụ: 2000000">
+
+        <label>Thời gian (tháng):</label>
+        <input type="number" id="months" placeholder="Ví dụ: 6">
+
+        <button onclick="calculate()">Tính toán</button>
+    </div>
+
+    <!-- KẾT QUẢ BÊN PHẢI -->
+    <div class="box">
+        <div id="resultContent" class="small-text">
+            Nhập thông tin bên trái để xem kế hoạch tiết kiệm.
+        </div>
+    </div>
+
+</div>
+
+<script>
+function calculate() {
+    let income = Number(document.getElementById("income").value);
+    let target = Number(document.getElementById("target").value);
+    let months = Number(document.getElementById("months").value);
+
+    if (!income || !target || !months) {
+        document.getElementById("resultContent").innerHTML =
+            "<span style='color:red'>Vui lòng nhập đầy đủ dữ liệu!</span>";
+        return;
+    }
+
+    let monthlySaving = target / months;
+    let percent = Math.round((monthlySaving / income) * 100);
+    let daily = Math.round(monthlySaving / 30);
+    let weekly = Math.round(monthlySaving / 4);
+
+    let comment = "";
+    if (percent <= 10) comment = "Mức tiết kiệm nhẹ, rất dễ đạt.";
+    else if (percent <= 25) comment = "Mức tiết kiệm vừa phải, chỉ cần quản lý chi tiêu tốt.";
+    else if (percent <= 40) comment = "Mức tiết kiệm hơi cao, cần cắt giảm một số khoản.";
+    else comment = "Mức tiết kiệm rất cao, nên xem xét lại mục tiêu hoặc kéo dài thời gian.";
+
+    let html = `
+        <div class="highlight">${percent}%</div>
+        <div class="small-text">Tỷ lệ thu nhập cần tiết kiệm mỗi tháng</div>
+
+        <div class="highlight">${monthlySaving.toLocaleString()} VND</div>
+        <div class="small-text">Số tiền phải tiết kiệm mỗi tháng</div>
+
+        <div class="highlight">${daily.toLocaleString()} VND</div>
+        <div class="small-text">Ngân sách chi tiêu tối đa mỗi ngày</div>
+
+        <div class="highlight">${weekly.toLocaleString()} VND</div>
+        <div class="small-text">Ngân sách chi tiêu tối đa mỗi tuần</div>
+
+        <h3>Nhận xét cá nhân hoá</h3>
+        <p class="small-text">${comment}</p>
+
+        <h3>Chiến Lược Tiết Kiệm Đề Xuất</h3>
+
+        <div class="strategy">
+            <div class="strategy-item">
+                <div class="strategy-item-title">01. Theo dõi chi tiêu</div>
+                Ghi lại các khoản chi để xem bạn đang tiêu vào đâu.
+            </div>
+
+            <div class="strategy-item">
+                <div class="strategy-item-title">02. Giới hạn chi tiêu theo ngày & tuần</div>
+                Tuân thủ ngân sách: <b>${daily.toLocaleString()}₫/ngày</b> | <b>${weekly.toLocaleString()}₫/tuần</b>.
+            </div>
+
+            <div class="strategy-item">
+                <div class="strategy-item-title">03. Tự động hoá tiết kiệm</div>
+                Chuyển tiền tự động sang tài khoản tiết kiệm sau mỗi kỳ lương.
+            </div>
+
+            <div class="strategy-item">
+                <div class="strategy-item-title">04. Cắt giảm chi phí không cần thiết</div>
+                Hạn chế đồ uống, ăn ngoài, mua sắm impulsive…
+            </div>
+        </div>
+    `;
+
+    document.getElementById("resultContent").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
